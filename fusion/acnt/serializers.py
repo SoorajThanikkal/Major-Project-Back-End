@@ -21,7 +21,7 @@ class ClientRegisterSerializer(serializers.ModelSerializer):
         password = attrs.get('password', '')
         password2 = attrs.get('password2', '')
         if password != password2:
-            return Response({'message':'password Doesnt match'},status = status.HTTP_400_BAD_REQUEST)
+            raise serializers.ValidationError({'message':' password dosent match'})
             
         return attrs
     
@@ -61,7 +61,7 @@ class FreelancerRegisterSerializer(serializers.ModelSerializer):
         password = attrs.get('password', '')
         password2 = attrs.get('password2', '')
         if password != password2:
-            return Response({'message':'password Doesnt match'},status = status.HTTP_400_BAD_REQUEST)
+            raise serializers.ValidationError({'message':' password dosent match'})
             
         return attrs
     
