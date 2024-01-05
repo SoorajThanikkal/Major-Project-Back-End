@@ -1,9 +1,11 @@
 from rest_framework import serializers
 from .models import User, Freelancer, Client
+from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.hashers import check_password
 from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
 
 
 
@@ -19,7 +21,7 @@ class ClientRegisterSerializer(serializers.ModelSerializer):
         password = attrs.get('password', '')
         password2 = attrs.get('password2', '')
         if password != password2:
-            raise serializers.ValidationError('passwords do not match ')
+            return Response({'message':'password Doesnt match'},status = status.HTTP_400_BAD_REQUEST)
             
         return attrs
     
@@ -59,7 +61,7 @@ class FreelancerRegisterSerializer(serializers.ModelSerializer):
         password = attrs.get('password', '')
         password2 = attrs.get('password2', '')
         if password != password2:
-            raise serializers.ValidationError('passwords do not match ')
+            return Response({'message':'password Doesnt match'},status = status.HTTP_400_BAD_REQUEST)
             
         return attrs
     
