@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import ClientRegisterSerializer,FreelancerRegisterSerializer,ClientLoginSerializer,FreelancerLoginSerializer,ClientProfileSerializer
+from .serializers import ClientRegisterSerializer,FreelancerRegisterSerializer,UserLoginSerializer,FreelancerLoginSerializer,ClientProfileSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework.views import APIView
 from rest_framework import status
@@ -41,8 +41,8 @@ class FreelanceRegisterView(GenericAPIView):
                 }, status = status.HTTP_201_CREATED)
             return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
         
-class ClientLoginView(GenericAPIView):
-    serializer_class = ClientLoginSerializer
+class UserLoginView(GenericAPIView):
+    serializer_class = UserLoginSerializer
     def post(self, request):
         serializer = self.serializer_class(data = request.data,context = {'requset':request})
         serializer.is_valid(raise_exception = True)

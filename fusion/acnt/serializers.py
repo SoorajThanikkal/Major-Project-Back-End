@@ -86,8 +86,7 @@ class FreelancerRegisterSerializer(serializers.ModelSerializer):
 
         return user
 
-
-class ClientLoginSerializer(serializers.ModelSerializer):
+class UserLoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length = 255, min_length = 6)
     password = serializers.CharField(max_length = 68, write_only = True)
     full_name = serializers.CharField(max_length = 255, read_only = True)
@@ -109,24 +108,28 @@ class ClientLoginSerializer(serializers.ModelSerializer):
         
         if user is None:
             raise AuthenticationFailed('check your email and password')
-        if not hasattr(user, 'client'):
-            raise AuthenticationFailed('User does not have client credentials.')
+        
+        user_type = None
+        
+        if  hasattr(user, 'client'):
+            user_type = 'client'
+        elif  hasattr(user, 'freelancer'):
+            user_type = 'freelancer'
+        else:
+            raise AuthenticationFailed('User does not have client or freelancer credentials.')
         
         
-        
+
         
         
         user_tokens = user.tokens()
             
-        return {
-            'email' : user.email,
-            'full_name' : user.get_full_name,
-            'access_token' : user_tokens.get('access'),
-            'refresh_token' : user_tokens.get('refresh'),
-            'user_type': 'client',
-
-            
-        }
+        attrs['full_name'] = user.get_full_name()
+        attrs['access_token'] = user_tokens.get('access')
+        attrs['refresh_token'] = user_tokens.get('refresh')
+        attrs['user_type'] = user_type
+        
+        return attrs
 
 
 class FreelancerLoginSerializer(serializers.ModelSerializer):
