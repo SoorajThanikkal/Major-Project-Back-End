@@ -109,7 +109,7 @@ class UserLoginSerializer(serializers.ModelSerializer):
         
         
         if user is None:
-            raise AuthenticationFailed('check your email and password')
+            raise AuthenticationFailed('Invalid email or passsword!')
         
         user_type = None
         
