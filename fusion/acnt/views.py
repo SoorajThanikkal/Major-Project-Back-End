@@ -24,6 +24,7 @@ class ClientRegisterView(GenericAPIView):
                     'data' : user,
                     'message' : f'HI! {serializer.data["first_name"]}, Account created successfull'
                 }, status = status.HTTP_201_CREATED)
+        else:
             return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 
@@ -39,6 +40,7 @@ class FreelanceRegisterView(GenericAPIView):
                     'data' : user,
                     'message' : f'HI! {serializer.data["first_name"]} , Account created successfull'
                 }, status = status.HTTP_201_CREATED)
+        else :
             return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
         
 class UserLoginView(GenericAPIView):
