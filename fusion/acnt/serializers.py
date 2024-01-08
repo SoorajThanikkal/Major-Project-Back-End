@@ -56,11 +56,16 @@ class FreelancerRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email','first_name','last_name','password','password2']
+        
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError('This email is already in use.')
+        return value
 
     def validate(self, attrs):
         password = attrs.get('password', '')
         password2 = attrs.get('password2', '')
-        if password != 6:
+        if len(password) < 6:
             raise serializers.ValidationError({'message': 'password must be at least 6 characters'})
         if password != password2:
             raise serializers.ValidationError({'message':' password dosent match'})
