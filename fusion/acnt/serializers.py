@@ -60,6 +60,8 @@ class FreelancerRegisterSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         password = attrs.get('password', '')
         password2 = attrs.get('password2', '')
+        if password != 6:
+            raise serializers.ValidationError({'message': 'password must be at least 6 characters'})
         if password != password2:
             raise serializers.ValidationError({'message':' password dosent match'})
             
