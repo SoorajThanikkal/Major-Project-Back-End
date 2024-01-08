@@ -59,7 +59,7 @@ class FreelancerRegisterSerializer(serializers.ModelSerializer):
         
     def validate_email(self, value):
         if User.objects.filter(email=value).exists():
-            raise serializers.ValidationError('This email is already in use.')
+            raise serializers.ValidationError({'message' :'This email is already in use.'})
         return value
 
     def validate(self, attrs):
