@@ -48,6 +48,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     # Rest of your User model fields and methods...
 
+
+class Location(models.Model):
+    locNames = models.CharField(max_length = 50,default = '')
 class Client(models.Model):
     user = models.OneToOneField(User, related_name="client", on_delete=models.CASCADE)
     profilepic = models.ImageField(upload_to='profile_photos', blank=True, null=True)
@@ -57,6 +60,7 @@ class Client(models.Model):
     )
     phone = models.CharField(max_length=10, validators=[phone_regex], blank=True, null=True)
     address = models.CharField(max_length=50, default='')
+    loc =  models.ForeignKey(Location, on_delete = models.CASCADE,null = True)
     about = models.TextField()
     
     def __str__(self):
@@ -69,6 +73,8 @@ class Client(models.Model):
   # Rest of your JobNames model fields...
 class JobNames(models.Model):
     jobcategory = models.CharField(max_length=50, default='')
+    
+
 
 class Freelancer(models.Model):
     user = models.OneToOneField(User, related_name="freelancer", on_delete=models.CASCADE)
@@ -79,6 +85,7 @@ class Freelancer(models.Model):
     )
     phone = models.CharField(max_length=10, validators=[phone_regex], blank=True, null=True)
     job = models.ForeignKey(JobNames, on_delete=models.CASCADE,null=True)
+    location = models.ForeignKey(Location, on_delete = models.CASCADE,null = True)
     address = models.CharField(max_length=250, default='')
     rating = models.DecimalField(max_digits=5, decimal_places=2,null=True)
     EXPERIENCE_CHOICES = (
