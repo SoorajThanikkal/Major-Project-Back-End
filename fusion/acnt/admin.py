@@ -5,6 +5,6 @@ from .models import User, Client, Freelancer,JobNames,Location
 
 admin.site.register(User)
 admin.site.register(Client)
-admin.site.register(Freelancer)
+admin.site.register(Freelancer)     
 admin.site.register(JobNames)
 admin.site.register(Location)
